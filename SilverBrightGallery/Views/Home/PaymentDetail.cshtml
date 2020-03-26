@@ -1,0 +1,314 @@
+﻿@using SilverBrightGallery.Models
+@model SilverBrightGallery.Models.CheckoutViewModel
+
+@{
+//ViewBag.Title = "PaymentDetail1";
+// Layout = "~/Views/Shared/_SilverBrightGallery.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>PaymentDetail</title>
+
+    <!-- Favicon  -->
+    <link rel="icon" href="~/Content/img/core-img/favicon.ico">
+
+    <!-- Core Style CSS -->
+    <link rel="stylesheet" href="~/Content/css/core-style.css">
+    <link rel="stylesheet" href="~/Content/style.css">
+   
+
+    <style>
+        .modal-header, .close {
+            /*background-color: #5cb85c;*/
+            color: white !important;
+            text-align: center;
+            font-size: 30px;
+        }
+
+        .modal-footer {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+
+<body>
+    @*<!-- Search Wrapper Area Start -->
+    <div class="search-wrapper section-padding-100">
+        <div class="search-close">
+            <i class="fa fa-close" aria-hidden="true"></i>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="search-content">
+                        <form action="#" method="get">
+                            <input type="search" name="search" id="search" placeholder="Type your keyword...">
+                            <button type="submit"><img src="~/Content/img/core-img/search.png" alt=""></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Search Wrapper Area End -->*@
+    <!-- ##### Main Content Wrapper Start ##### -->
+    <div class="main-content-wrapper d-flex clearfix">
+        <!-- Mobile Nav (max width 767px)-->
+        <div class="mobile-nav">
+            <!-- Navbar Brand -->
+            <div class="amado-navbar-brand">
+                <a href="@Url.Action("Index","Home")"><img src="~/Content/img/core-img/SilverLogo.png" width="237" height="155" alt="A"></a>
+            </div>
+            <!-- Navbar Toggler -->
+            <div class="amado-navbar-toggler">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+
+        <!-- TOP HEADER BAR -->
+        <div class="col-12">
+            <div class="row">
+                <div class="col-lg-4">
+                    <!-- Logo -->
+                    <div class="logo">
+                        <a href="@Url.Action("Index","Home")"><img src="~/Content/img/core-img/SilverLogo.png" width="237" height="155" alt="A"></a>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="myAmado">
+                        @{
+                            if (Session["Registration"] != null && ((RegisterUser)Session["Registration"]).Id != 0)
+                            {
+
+                                <a href="@Url.Action("LogOut","Home")" class="btnLogout text-right text-info">
+                                    <span>
+                                        @Html.Label("Welcome" + " " + ((RegisterUser)Session["Registration"]).UserName + " " + "!")
+                                        <i class="fa fa-sign-out"></i>
+                                    </span>
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="#" class="btnlogin text-right text-info">
+                                    <span>
+                                        @Html.Label("Login")
+                                        <i class="fa fa-sign-in"></i>
+                                    </span>
+                                </a>
+                            }
+                        }
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Header Area Start -->
+        <header class="header-area clearfix">
+            <!-- Close Icon -->
+            <div class="nav-close">
+                <i class="fa fa-close" aria-hidden="true"></i>
+            </div>
+            <!-- Amado Nav -->
+            <nav class="amado-nav">
+                <ul>
+                    <li><a href='@Url.Action("Index","Home")'>Home</a></li>
+                    <li><a href='@Url.Action("Collection","Home")'>Collection</a></li>
+                    <li><a href='@Url.Action("Cart","Home")'>Cart</a></li>
+                    <li class="active"><a href='@Url.Action("Checkout","Home")'>Checkout</a></li>
+                </ul>
+            </nav>
+            <!-- Button Group -->
+            <div class="amado-btn-group mt-30 mb-100">
+                <a href="@Url.Action("Discount","Home")" class="btn amado-btn mb-15">SALE</a>
+                @*<a href="#" class="btn amado-btn active">New this week</a>*@
+            </div>
+            <!-- Cart Menu -->
+            <div class="cart-fav-search mb-100">
+                <a href="@Url.Action("Cart","Home")" class="cart-nav"><img src="~/Content/img/core-img/cart.png" alt=""> Cart <span>(0)</span></a>
+                @*<a href="#" class="search-nav"><img src="~/Content/img/core-img/search.png" alt=""> Search</a>*@
+            </div>
+             @*Social Button 
+            <div class="social-info d-flex justify-content-between">
+            </div>*@
+        </header>
+        <!-- Header Area End -->
+        <div class="cart-table-area section-padding-100">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 col-lg-8">
+                        <div class="checkout_details_area mt-50 clearfix">
+
+                            <div class="cart-title">
+                                <h2>PaymentDetail</h2>
+                            </div>
+                            <form action="#" method="post">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <p><strong>Name on Card</strong></p>
+                                        <input type="text" class="form-control" id="first_name" value="" placeholder="First Name" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <p><strong>Credit Card Number</strong></p>
+                                        <input type="text" class="form-control" id="first_name" value="" placeholder="1111-2222-3333-4444" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <p><strong>Exp Month</strong></p>
+                                        <input type="email" class="form-control" id="email" placeholder="December" value="">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <p><strong>Exp Year</strong></p>
+                                        <input type="email" class="form-control" id="email" placeholder="2018" value="" />
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <p><strong>CVV</strong></p>
+                                        <input type="email" class="form-control" id="email" placeholder="352" value="">
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="custom-control custom-checkbox d-block mb-2">
+                                            <a href='@Url.Action("Collection","Home")'>Back to Shopping</a>
+                                        </div>
+                                        <div class="custom-control custom-checkbox d-block">
+                                            <input type="checkbox" class="custom-control-input" id="customCheck3">
+                                            <label class="custom-control-label" for="customCheck3">Ship to a different address</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="cart-btn mt-100">
+                                <a href="@Url.Action("Index","Home")" class="btn amado-btn w-100">PAY NOW</a>
+                            </div>
+
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+            </div>
+</div>
+                    <div class="col-12 col-lg-4">
+                    </div>
+                    <!-- ##### Main Content Wrapper End ##### -->
+                    <!-- ##### Footer Area Start ##### -->
+                    <footer class="footer_area clearfix">
+                        <div class="container">
+                            <div class="row align-items-center">
+                                <!-- Single Widget Area -->
+                                <div class="col-12 col-lg-4">
+                                    <div class="single_widget_area">
+                                        <!-- Logo -->
+                                        <div class="footer-logo mr-50">
+                                            <a href="@Url.Action("Index","Home")"><img src="~/Content/img/core-img/SilverLogo.png" width="237" height="155" alt="A"></a>
+                                        </div>
+                                        @*<!-- Copywrite Text -->
+                            <p class="copywrite">
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                Copyright &copy;
+                                <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->*@
+                                    </div>
+                                </div>
+
+                                <!-- Single Widget Area -->
+                                <div class="col-12 col-lg-8">
+                                    <div class="single_widget_area">
+                                        <!-- Footer Menu -->
+                                        <div class="footer_menu">
+                                            <nav class="navbar navbar-expand-lg justify-content-end">
+                                                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#footerNavContent" aria-controls="footerNavContent" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
+                                                <div class="collapse navbar-collapse" id="footerNavContent">
+                                                    <ul class="navbar-nav ml-auto">
+                                                        <li class="nav-item active">
+                                                            <a class="nav-link" href='@Url.Action("Index","Home")'>Home</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" href='@Url.Action("Collection","Home")'>Collection</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            @*<a class="nav-link" href="product-details.html">Product</a>*@
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" href='@Url.Action("Cart","Home")'>Cart</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" href='@Url.Action("Checkout","Home")'>Checkout</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModal" role="dialog">
+                        <div class="modal-dialog">
+                            @using (Html.BeginForm())
+                            {
+          <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header amado-btn" style="padding:35px 50px;">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4><span class="glyphicon glyphicon-lock"></span> Login</h4>
+                                    </div>
+                                    <div class="modal-body" style="padding:40px 50px;">
+                                        <form role="form">
+                                            <div class="form-group">
+                                                <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
+                                                <input type="text" class="form-control" id="usrname" name="Name" placeholder="Enter Name">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+                                                <input type="text" class="form-control" id="psw" name="Password" placeholder="Enter password">
+                                            </div>
+                                            <div class="checkbox">
+                                                <label><input type="checkbox" value="" checked>Remember me</label>
+                                            </div>
+                                            <button type="submit" class="btn amado-btn btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+
+                                        <div class="col-md-6">
+                                            <button type="submit" class="btn btn-warning btn-default pull-left" data-dismiss="modal"> Cancel</button>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>Not a member? <a href="@Url.Action("CreateAccount","Home")">Sign Up</a></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- ##### Footer Area End ##### -->
+                    <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
+                    <script src="~/Content/js/jquery/jquery-2.2.4.min.js"></script>
+                    <!-- Popper js -->
+                    <script src="~/Content/js/popper.min.js"></script>
+                    <!-- Bootstrap js -->
+                    <script src="~/Content/js/bootstrap.min.js"></script>
+                    <!-- Plugins js -->
+                    <script src="~/Content/js/plugins.js"></script>
+                    <!-- Active js -->
+                    <script src="~/Content/js/active.js"></script>
+                    <script>
+
+        $(document).ready(function () {
+            $(".btnlogin").click(function () {
+                $("#myModal").modal();
+            });
+        });
+
+</script>
+</body>
+</html>
+

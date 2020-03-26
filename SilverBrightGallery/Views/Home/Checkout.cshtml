@@ -1,0 +1,355 @@
+﻿@using SilverBrightGallery.Models
+@model SilverBrightGallery.Models.CheckoutViewModel
+
+
+@functions {
+    bool isRegisteredUser()
+    {
+        return Session["Registration"] != null && ((RegisterUser)Session["Registration"]).Id != 0;
+    }
+
+    string registeredUserName()
+    {
+        return ((RegisterUser)Session["Registration"]).UserName;
+    }
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <!-- Title  -->
+    <title>Checkout</title>
+
+    <!-- Favicon  -->
+    <link rel="icon" href="~/Content/img/core-img/favicon.ico">
+
+    <!-- Core Style CSS -->
+    <link rel="stylesheet" href="~/Content/css/core-style.css">
+    <link rel="stylesheet" href="~/Content/style.css">
+    
+
+    <style>
+        .modal-header, .close {
+            /*background-color: #5cb85c;*/
+            color: white !important;
+            text-align: center;
+            font-size: 30px;
+        }
+
+       
+        .modal-header, .close {
+            /*background-color: #5cb85c;*/
+            color: white !important;
+            text-align: center;
+            font-size: 30px;
+        }
+        .modal-footer {
+            background-color: #f9f9f9;
+        }
+
+        .footer_menu.fa {
+              color: white;
+              font-size: 32px;
+              padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    @*<!-- Search Wrapper Area Start -->
+
+    <!-- Search Wrapper Area End -->*@
+    <!-- ##### Main Content Wrapper Start ##### -->
+    <div class="main-content-wrapper d-flex clearfix">
+        <!-- Mobile Nav (max width 767px)-->
+        <div class="mobile-nav">
+            <!-- Navbar Brand -->
+            <div class="amado-navbar-brand">
+                <a href="@Url.Action("Index","Home")"><img src="~/Content/img/core-img/SilverLogo.png" width="237" height="155" alt="A"></a>
+            </div>
+            <!-- Navbar Toggler -->
+            <div class="amado-navbar-toggler">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+
+        <!-- TOP HEADER BAR -->
+        <div class="col-12">
+            <div class="row">
+                <div class="col-lg-4">
+                    <!-- Logo -->
+                    <div class="logo">
+                        <a href="@Url.Action("Index","Home")"><img src="~/Content/img/core-img/SilverLogo.png" width="237" height="155" alt="A"></a>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="myAmado">
+                       @{
+                           if (@isRegisteredUser())
+                           {
+
+                            <a href="@Url.Action("LogOut","Home")" class="btnLogout text-right">
+                                <span>
+                                    @Html.Label("Welcome" + " " + @registeredUserName() + " " + "!")
+                                    <i class="fa fa-sign-out"></i>
+                                </span>
+                            </a>
+                           }
+
+                           else
+                           {
+                                <a href="#" class="btnlogin text-right">
+                                    <span>
+                                        @Html.Label("Login")
+                                        <i class="fa fa-sign-in"></i>
+                                    </span>
+                                </a>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Header Area Start -->
+        <header class="header-area clearfix">
+            <!-- Close Icon -->
+            <div class="nav-close">
+                <i class="fa fa-close" aria-hidden="true"></i>
+            </div>
+            <!-- Amado Nav -->
+            <nav class="amado-nav">
+                <ul>
+                    <li><a href='@Url.Action("Index", "Home")'>Home</a></li>
+                    <li><a href='@Url.Action("Collection", "Home")'>Collection</a></li>
+                    <li><a href='@Url.Action("Cart", "Home")'>Cart</a></li>
+                    <li class="active"><a href='@Url.Action("Checkout", "Home")'>Checkout</a></li>
+                </ul>
+            </nav>
+            <!-- Button Group -->
+            <div class="amado-btn-group mt-30 mb-100">
+                <a href="@Url.Action("Discount","Home")" class="btn amado-btn mb-15">Special Offer</a>
+            </div>
+            <!-- Cart Menu -->
+            <div class="cart-fav-search mb-100">
+                <a href="@Url.Action("Cart", "Home")" class="cart-nav"><img src="~/Content/img/core-img/cart.png" alt=""> Cart <span>(0)</span></a>
+            </div>
+            <!-- Social Button -->
+            <div class="social-info d-flex justify-content-between">
+            </div>
+        </header>
+        <!-- Header Area End -->
+
+        <div class="cart-table-area section-padding-100">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 col-lg-8">
+                        <div class="checkout_details_area mt-50 clearfix">
+
+                            <div class="cart-title">
+                                <h2>Deliver To</h2>
+                            </div>
+
+                            <form action="#" method="post">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <input type="text" class="form-control" id="first_name" value="" placeholder="First Name" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <input type="text" class="form-control" id="last_name" value="" placeholder="Last Name" required>
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <input type="text" class="form-control" id="company" placeholder="Company Name" value="">
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <input type="email" class="form-control" id="email" placeholder="Email" value="">
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <select class="w-100" id="country">
+                                            <option value="usa">United States</option>
+                                            <option value="uk">United Kingdom</option>
+                                            <option value="ger">Germany</option>
+                                            <option value="fra">France</option>
+                                            <option value="ind">India</option>
+                                            <option value="aus">Australia</option>
+                                            <option value="bra">Brazil</option>
+                                            <option value="cana">Canada</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <input type="text" class="form-control mb-3" id="street_address" placeholder="Address" value="">
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <input type="text" class="form-control" id="city" placeholder="Town" value="">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <input type="text" class="form-control" id="zipCode" placeholder="Zip Code" value="">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <input type="number" class="form-control" id="phone_number" min="0" placeholder="Phone No" value="">
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <textarea name="comment" class="form-control w-100" id="comment" cols="30" rows="10" placeholder="Leave a comment about your order"></textarea>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="custom-control custom-checkbox d-block mb-2">
+                                            <a href='@Url.Action("CreateAccount","Home")' class="btn amado-btn w-100">Creat Account</a>
+                                        </div>
+                                        <div class="custom-control custom-checkbox d-block">
+                                            <input type="checkbox" class="custom-control-input" id="customCheck3">
+                                            <label class="custom-control-label" for="customCheck3">Ship to a different address</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4">
+                        <div class="cart-summary">
+                            <h5>Cart Total</h5>
+                            <ul class="summary-table">
+                                <li><span>subtotal:</span> <span>£ @Model.TotalCost</span></li>
+                                    <li><span>delivery:</span> <span>Free</span></li>
+                                    <li><span>total:</span> <span>£ @Model.TotalCost</span></li>
+                            </ul>
+
+                            <div class="payment-method">
+                                <!-- Cash on delivery -->
+                                <div class="custom-control custom-checkbox mr-sm-2">
+                                </div>
+                                <!-- Paypal -->
+                                <div class="payment-method">
+                                    <!-- Paypal -->
+                                    <script src="https://www.paypal.com/sdk/js?client-id=ASiHtC_BG-YxmtSiUQaFSJZ2hNdi7VKcaJh0D5mZWdXMSg0_sigyoP5fmUNZQy_O1V3ofEWn9FP-9wzj">
+                                        // Required. Replace SB_CLIENT_ID with your sandbox client ID.
+                                    </script>
+                                    <div id="paypal-button-container">
+                                    </div>
+                                    <script>
+                                        paypal.Buttons().render('#paypal-button-container');
+                                        // This function displays Smart Payment Buttons on your web page.
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Main Content Wrapper End ##### -->
+    
+    <!-- ##### Footer Area Start ##### -->
+    <footer class="footer_area clearfix">
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- Single Widget Area -->
+                <div class="col-12 col-lg-4">
+                    <div class="single_widget_area">
+                        <!-- Logo -->
+                        <div class="footer-logo mr-50">
+                            <a href="@Url.Action("Index","Home")"><img src="~/Content/img/core-img/SilverLogo.png" width="237" height="155" alt="A"></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Single Widget Area -->
+                <div class="col-12 col-lg-8">
+                    <div class="single_widget_area">
+                        <!-- Footer Menu -->
+                        <div class="footer_menu">
+                            <nav class="navbar navbar-expand-lg justify-content-end">
+                                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#footerNavContent" aria-controls="footerNavContent" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
+                                <div class="collapse navbar-collapse" id="footerNavContent">
+                                    <ul class="navbar-nav ml-auto">
+
+                                        <li class="nav-item active">
+                                            <a href="#" class="fa fa-facebook"></a>
+                                        </li>
+                                        <li class="nav-item active">
+                                            <a href="#" class="fa fa-twitter"></a>
+                                        </li>
+                                        <li class="nav-item active">
+                                            <a href="#" class="fa fa-instagram"></a>
+                                        </li>
+                                        <li class="nav-item active">
+                                            <a href="#" class="fa fa-linkedin"></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            @using (Html.BeginForm())
+            {
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header amado-btn" style="padding:35px 50px;">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4><span class="glyphicon glyphicon-lock"></span> Login</h4>
+                    </div>
+                    <div class="modal-body" style="padding:40px 50px;">
+                        <form role="form">
+                            <div class="form-group">
+                                <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
+                                <input type="text" class="form-control" id="usrname" name="Name" placeholder="Enter Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+                                <input type="text" class="form-control" id="psw" name="Password" placeholder="Enter password">
+                            </div>
+                            <div class="checkbox">
+                                <label><input type="checkbox" value="" checked>Remember me</label>
+                            </div>
+                            <button type="submit" class="btn amado-btn btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-warning btn-default pull-left" data-dismiss="modal"> Cancel</button>
+                        </div>
+                        <div class="col-md-6">
+                            <p>Not a member? <a href="@Url.Action("CreateAccount","Home")">Sign Up</a></p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- ##### Footer Area End ##### -->
+    <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
+    <script src="~/Content/js/jquery/jquery-2.2.4.min.js"></script>
+    <!-- Popper js -->
+    <script src="~/Content/js/popper.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="~/Content/js/bootstrap.min.js"></script>
+    <!-- Plugins js -->
+    <script src="~/Content/js/plugins.js"></script>
+    <!-- Active js -->
+    <script src="~/Content/js/active.js"></script>
+    <script>
+        $(document).ready(function () {
+        $(".btnlogin").click(function () {
+        $("#myModal").modal();
+        });
+        });
+    </script>
+
+</body>
+
+</html>
+
